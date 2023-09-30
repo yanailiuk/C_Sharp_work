@@ -1,0 +1,140 @@
+using System;
+using System.Text;
+
+class Program
+{
+    static void Main()
+    {
+        Console.OutputEncoding = Encoding.UTF8;
+        
+        //1. Напишіть програму, яка виведе всі парні числа від 1 до 20 включно.
+
+        for (int i = 1; i <= 20; i++)
+        {
+            if (i % 2 == 0)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        //2. Створіть програму, яка виведе суму всіх чисел від 1 до 100.
+
+        int sum = 0;
+        for (int i = 1; i <= 100; i++)
+        {
+            sum += i;
+        }
+        Console.WriteLine(sum);
+
+        //3. Реалізуйте програму, яка виведе таблицю множення для заданого користувачем числа.
+
+        Console.WriteLine("Введіть число:  ");
+        int number = Convert.ToInt32(Console.ReadLine());
+        for (int i = 1; i <= 10; i++)
+        {
+            int result = number * i;
+            Console.WriteLine($"{number} * {i} = {result}");
+        }
+
+        //4. Створіть програму, яка виведе факторіал числа, яке користувач введе з клавіатури.
+        Console.WriteLine("Введіть число:  ");
+        int n = Convert.ToInt32(Console.ReadLine());
+        int rslt = 1;
+        for (int i = 1; i <= n; i++)
+        {
+            rslt *= i;
+        }
+        Console.WriteLine($"{n}! = {rslt}");
+        
+        //5. Напишіть програму, яка знайде суму всіх простих чисел в межах від 1 до 50.
+
+        int total = 0;
+        for (int number_ = 2; number_ <= 50; number_++)
+        {
+            bool isPrime = true;
+            for (int i = 2; i <= Math.Sqrt(number_); i++)
+            {
+                if (number_ % i == 0)
+                {
+                    isPrime = false;
+                    break;
+                }
+            }
+            if (isPrime)
+            {
+                total += number_;
+            }
+        }
+        Console.WriteLine($"Сума простих чисел від 1 до 50: {total}");
+
+        //6. Створіть програму, яка переведе число в двійкову систему числення.
+
+        Console.Write("Введіть десяткове число: ");
+        int decimalNumber = int.Parse(Console.ReadLine());
+
+        string binaryNumber = DecimalToBinary(decimalNumber);
+
+        Console.WriteLine($"Двійкове представлення: {binaryNumber}");
+    
+        static string DecimalToBinary(int decimalNumber)
+        {
+            if (decimalNumber == 0)
+                return "0";
+
+            string binary = "";
+            while (decimalNumber > 0)
+            {
+                int remainder = decimalNumber % 2;
+                binary = remainder + binary;
+                decimalNumber /= 2;
+            }
+            return binary;
+        }
+
+        //7. Напишіть програму, яка знаходитиме суму чисел Фібоначчі, яка менша заданого числа, та підрахує кількість елементів.
+
+        Console.WriteLine("Введіть максимальне число для суми чисел Фібоначчі: ");
+        int maxNumber = int.Parse(Console.ReadLine());
+
+        int sum_ = 0;
+        int count = 0;
+        int a = 0;
+        int b = 1;
+
+        while (sum_ + b <= maxNumber)
+        {
+            int temp = a;
+            a = b;
+            b = temp + b;
+
+            sum_ += a;
+            count++;
+        }
+
+        Console.WriteLine($"Сума чисел Фібоначчі менше або рівна {maxNumber}: {sum_}");
+        Console.WriteLine($"Кількість елементів: {count}");
+
+        //8. Розробіть програму, яка знайде найбільший спільний дільник (НСД) для двох чисел, які введе користувач.
+
+        Console.Write("Введіть перше число: ");
+        int number1 = int.Parse(Console.ReadLine());
+        Console.Write("Введіть друге число: ");
+        int number2 = int.Parse(Console.ReadLine());
+
+        int gcd = FindGCD(number1, number2);
+
+        Console.WriteLine($"Найбільший спільний дільник ({number1}, {number2}): {gcd}");
+
+        static int FindGCD(int a, int b)
+        {
+            while (b != 0)
+            {
+                int temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+    }
+}
