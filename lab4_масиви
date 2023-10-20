@@ -1,0 +1,164 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
+
+class Program
+{
+    static void Main()
+    {
+        Console.OutputEncoding = Encoding.UTF8;
+
+
+        //1. Створіть програму, яка обчислює середнє арифметичне всіх елементів y заданому масиві цілих чисел.
+        
+        int[] numbers = { 1, 2, 3, 4, 5 };
+        double sum = 0;
+        foreach (int number in numbers)
+        {
+            sum += number;
+        }
+        double average = (sum / numbers.Length);
+        Console.WriteLine(average);
+
+
+        //method
+        int[] array = { 5, 10, 15, 20, 25 };
+     
+        static double CalculateAverage(int[] arr)
+        {
+            int sum = 0;
+            foreach (int num in arr)
+            {
+                sum += num;
+            }
+            double average = (double)sum / arr.Length;
+            return average;
+        }
+        Console.WriteLine(CalculateAverage(array));
+
+
+            //2. Напишіть програму для перевірки, чи є заданий масив паліндромом (тобто читається однаково зліва направо і справа наліво).
+
+            Console.Write("Введіть рядок для перевірки на паліндром: ");
+            string input = Console.ReadLine();
+
+            bool isPalindrome = IsPalindrome(input);
+
+            if (isPalindrome)
+            {
+                Console.WriteLine("Введений рядок є паліндромом.");
+            }
+            else
+            {
+                Console.WriteLine("Введений рядок не є паліндромом.");
+            }
+
+            static bool IsPalindrome(string str)
+            {
+                str = str.Replace(" ", "").ToLower();
+
+                for (int i = 0; i < str.Length / 2; i++)
+                {
+                    if (str[i] != str[str.Length - 1 - i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            //3. Напишіть програму, яка знаходить і виводить на екран всі парні числа у заданому масиві.
+            int[] nums = { 14, 23, 36, 49, 58 };
+            foreach (int num in nums)
+            {
+                if (num % 2 == 0)
+                {
+                    Console.WriteLine(num);
+                }
+            }
+
+        // method
+
+        int[] nums1 = { 14, 23, 36, 49, 58 };
+
+        EvenOnly(nums1);       
+
+        static void EvenOnly(int[] arr)
+        {
+            foreach (int num in arr)
+            {
+                if (num % 2 == 0)
+                {
+                    Console.WriteLine(num);
+                }
+            }
+        }
+
+        
+            //4. Розробіть функцію, яка знаходить суму всіх додатних елементів у масиві.
+            int[] array1 = { 12, 18, -36, -49, -58 };
+            sum = 0;
+            foreach (int num in array1)
+            {
+                if (num > 0)
+                {
+                    sum += num;
+                }
+            }
+            Console.WriteLine(sum);
+        
+        // method 
+
+        int[] array2 = { 12, 18, -36, -49, -58 };
+       
+        static double SumPositive(int[] arr)
+        {
+            double sum = 0;
+            foreach (int num in arr)
+            {
+                if (num > 0)
+                {
+                    sum += num;
+                }
+            }
+            return sum;
+        }
+        Console.WriteLine(SumPositive(array2));
+
+
+        //5. Реалізуйте програму для пошуку найменшого індексу заданого елемента у масиві.
+
+
+        //6. Напишіть функцію, яка обчислює добуток всіх від’ємних елементів у заданому масиві.
+        int[] array3 = { 12, 18, -3, -4, -2 };
+        int result = 1;
+        foreach (int num in array3)
+        {
+            if (num < 0)
+            {
+                result *= num;
+            }
+        }
+        Console.WriteLine(result);
+    
+        // method
+        int[] array4 = { 12, 18, -3, -4, -2 };
+        static double ProductNegatives(int[] arr)
+        {
+            double product = 1;
+            foreach(int num in arr)
+            {
+                if (num < 0)
+                {
+                    product *= num;
+                }
+            }
+            return product;
+        }
+        Console.WriteLine(ProductNegatives(array4));
+
+
+    }
+}
+
+
