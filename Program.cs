@@ -1,180 +1,131 @@
-﻿using System.Linq;
+﻿/* Визначити клас Car з полями назва, колір, ціна, const полем CompanyName
+Створити два конструктори – дефолтний і з параметрами.
+Визначити методи Input() –  для введення даних про автомобіль з консолі,
+Print() - для виведення даних про машину на консоль
+ChangePrice(double x) – для зміни ціни на х%
 
-Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-// 1. Калькулятор: Створіть функцію, яка приймає два операнди і операцію (додавання, віднімання, множення, ділення)
-// в якості аргументів і повертає результат операції.
-
-double operand1 = 15;
-double operand2 = 3;
-char operation = '+';
-static double Calculate(double operand1, double operand2, char operation)
-        {
-            switch (operation)
-            {
-                case '+':
-                    return operand1 + operand2;
-                case '-':
-                    return operand1 - operand2;
-                case '*':
-                    return operand1 * operand2;
-                case '/':
-
-                    if (operand2 != 0)
-                        return operand1 / operand2;
-                    else
-                    {
-                        Console.WriteLine("Ділення на нуль!");
-                        return double.NaN; // NaN - Not a Number
-                    }
-                default:
-                    Console.WriteLine("Помилка: Невідома операція");
-                    return double.NaN;
-            }
-        }
-double result = Calculate(operand1, operand2, operation);
-Console.WriteLine($"Результат: {result}");
+Ввести дані про 3 авто.
+Зменшити їх ціну на 10%, вивести дані про авто.
+Ввести новий колір і пофарбувати авто з кольором white у вказаний колір
+Створити метод PrintInfo, який повертає рядок з даними про авто
+*/
 
 
-// 2. Перевірка простого числа: Розробіть функцію, яка перевіряє, чи є задане число простим і повертає булеве значення.
+// use PascalCase 
+class Car
+{
+    // Fields
+    private string name;
+    private string color;
+    private double price;
 
-int numberToCheck = 17;   
-bool isPrime = IsPrime(numberToCheck);
+    // Constant field
+    private const string CompanyName = "TheBestCarCompany";
 
-Console.WriteLine($"{numberToCheck} є простим числом: {isPrime}");
-    
-static bool IsPrime(int number)
+    // Constructors
+    public Car()
     {
-        if (number <= 1)
-            return false;
-
-        for (int i = 2; i <= Math.Sqrt(number); i++)
-        {
-            if (number % i == 0)
-                return false;
-        }
-
-        return true;
+        // 1. Default constructor
     }
 
 
-// 3. Створіть функцію, яка конвертує суму з однієї валюти до іншої, використовуючи поточний обмінний курс.
-
-double amountInUSD = 100.0;
-double exchangeRate = 36.5; 
-
-double amountInUAH = ConvertCurrency(amountInUSD, exchangeRate);
-
-Console.WriteLine($"{amountInUSD} USD дорівнює {amountInUAH} UAH за обмінним курсом {exchangeRate}");
-
-static double ConvertCurrency(double amount, double exchangeRate)
-{
-    return amount * exchangeRate;
-}
-
-
-
-// 4. Напишіть функцію, яка знаходить найменший і найбільший елементи в заданому масиві та повертає їх.
-
-int[] array = { 4, 7, 1, 9 };
-static (int min, int max) FindMinMax(int[] array)
-{
-
-    int min = array.Min();
-    int max = array.Max();
-
-    return (min, max);
-}
-
-var (min, max) = FindMinMax(array);
-
-Console.WriteLine($"Мінімальний елемент: {min}");
-Console.WriteLine($"Максимальний елемент: {max}");
-
-
-// 5. Створіть функцію, яка приймає рядок і підраховує кількість голосних та приголосних букв у ньому.
-
-string inputString = "hello world";
-var result1 = CountVowelsAndConsonants(inputString);
-Console.WriteLine($"Голосних:{result1.vowelCount}  Приголосних:{result1.consonantCount}");
-static (int vowelCount, int consonantCount) CountVowelsAndConsonants(string input)
-{
-    int vowelCount = 0;
-    int consonantCount = 0;
-
-    foreach (char c in input.ToLower())
+    // 2. with parameters 
+    public Car(string name, string color, double price)
     {
-        if (char.IsLetter(c))
+        this.name = name;
+        this.color = color;
+        this.price = price;
+    }
+
+    // Methods
+    public void Input()
+    {
+        Console.Write("Enter car name: ");
+        name = Console.ReadLine();
+
+        Console.Write("Enter car color: ");
+        color = Console.ReadLine();
+
+        Console.Write("Enter car price: ");
+        double.TryParse(Console.ReadLine(), out price);
+    }
+
+    public void Print()
+    {
+        Console.WriteLine($"Car Details:\nName: {name}\nColor: {color}\nPrice: {price:C}\nCompany: {CompanyName}\n");
+    }
+
+    public void ChangePrice(double percentage)
+    {
+        price -= price * (percentage / 100);
+    }
+
+    public void PaintCar(string newColor)
+    {
+        if (color.ToLower() == "white")
         {
-            if ("aeiou".Contains(c))
-            {
-                vowelCount++;
-            }
-            else
-            {
-                consonantCount++;
-            }
+            color = newColor;
+            Console.WriteLine($"Car has been painted to {newColor}.");
+        }
+        else
+        {
+            Console.WriteLine("Car can only be painted if the current color is white.");
         }
     }
-    return (vowelCount, consonantCount);
+
+    public string PrintInfo()
+    {
+        return $"Name: {name}, Color: {color}, Price: {price:C}, Company: {CompanyName}";
+    }
 }
 
-
-
-// 6. Створіть програму, яка обчислює площу та об'єм геометричних фігур (наприклад, круга, прямокутника, куба) на основі введених параметрів.
-
-Console.WriteLine("Обчислення площі та об'єму геометричних фігур");
-Console.WriteLine("1. Круг");
-Console.WriteLine("2. Прямокутник");
-Console.WriteLine("3. Куб");
-
-Console.Write("Виберіть фігуру (1, 2 або 3): ");
-int choice = int.Parse(Console.ReadLine());
-
-switch (choice)
+class Program
 {
-    case 1:
-        CalculateCircle();
-        break;
-    case 2:
-        CalculateRectangle();
-        break;
-    case 3:
-        CalculateCube();
-        break;
-    default:
-        Console.WriteLine("Невірний вибір");
-        break;
+    static void Main()
+    {
+        // Creating 3 car objects
+        Car car1 = new Car();
+        Car car2 = new Car("Toyota", "Blue", 25000);
+        Car car3 = new Car();
+
+        // Input data for car1 and car3
+        car1.Input();
+        car3.Input();
+
+        // Printing initial car details
+        Console.WriteLine("Initial Car Details:");
+        car1.Print();
+        car2.Print();
+        car3.Print();
+
+        // Decrease prices by 10%
+        car1.ChangePrice(10);
+        car2.ChangePrice(10);
+        car3.ChangePrice(10);
+
+        // Printing car details after price change
+        Console.WriteLine("Car Details After Price Change:");
+        car1.Print();
+        car2.Print();
+        car3.Print();
+
+        // Input new color and paint car with white color
+        Console.Write("Enter new color to paint white cars: ");
+        string newColor = Console.ReadLine();
+
+        car1.PaintCar(newColor);
+        car3.PaintCar(newColor);
+
+        // Printing car details after painting
+        Console.WriteLine("Car Details After Painting:");
+        car1.Print();
+        car2.Print();
+        car3.Print();
+
+        // Printing car info using the PrintInfo method
+        Console.WriteLine("Car Info:");
+        Console.WriteLine(car1.PrintInfo());
+        Console.WriteLine(car2.PrintInfo());
+        Console.WriteLine(car3.PrintInfo());
+    }
 }
-    
-    static void CalculateCircle()
-{
-    Console.Write("Введіть радіус круга: ");
-    double radius = double.Parse(Console.ReadLine());
-
-    double area = Math.PI * Math.Pow(radius, 2);
-    Console.WriteLine($"Площа круга: {area:F2}");
-}
-
-static void CalculateRectangle()
-{
-    Console.Write("Введіть довжину прямокутника: ");
-    double length = double.Parse(Console.ReadLine());
-
-    Console.Write("Введіть ширину прямокутника: ");
-    double width = double.Parse(Console.ReadLine());
-
-    double area = length * width;
-    Console.WriteLine($"Площа прямокутника: {area:F2}");
-}
-
-static void CalculateCube()
-{
-    Console.Write("Введіть довжину ребра куба: ");
-    double side = double.Parse(Console.ReadLine());
-
-    double volume = Math.Pow(side, 3);
-    Console.WriteLine($"Об'єм куба: {volume:F2}");
-}
-
-
