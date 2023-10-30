@@ -1,0 +1,206 @@
+//1
+public abstract class Figure
+{
+    public abstract double CalculateArea();
+    public abstract double CalculatePerimeter();  
+}
+
+class Circle : Figure
+{
+    public double Radius { get; set; }
+
+    public Circle(double radius)
+    {
+        Radius = radius;
+    }
+
+    public override double CalculatePerimeter()
+    {
+        return 2 * Math.PI * Radius;
+    }
+
+    public override double CalculateArea()
+    {
+        return Math.PI * Math.Pow(Radius, 2);
+    }
+}
+
+
+public class Rectangle : Figure
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+    public Rectangle(double width, double height)
+    {
+        Width = width;
+        Height = height;
+    }
+    public override double CalculatePerimeter()
+    {
+        return (Width + Height) * 2;
+    }
+    public override double CalculateArea()
+    {
+        return Width * Height;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+
+        Circle circle = new Circle(7);
+        Console.WriteLine("Коло 1:");
+        Console.WriteLine($"Площа: {circle.CalculateArea()}");
+        Console.WriteLine($"Периметр: {circle.CalculatePerimeter()}");
+        Console.WriteLine();
+
+
+        Rectangle rectangle = new Rectangle(4, 5);
+        Console.WriteLine("Прямокутник 1:");
+        Console.WriteLine($"Площа: {rectangle.CalculateArea()}");
+        Console.WriteLine($"Периметр: {rectangle.CalculatePerimeter()}");
+        Console.WriteLine();
+
+
+        Fruit fruit = new Fruit();
+        fruit.Name = "A Fresh Fruit";
+
+        // Виведення інформації про базовий фрукт
+        Console.WriteLine("Фрукт:");
+        Console.WriteLine($"Назва: {fruit.Name}");
+        Console.WriteLine();
+
+        // Створення об'єкта похідного класу "Яблуко"
+        Apple apple = new Apple();
+        apple.Name = "Яблуко";
+        apple.Variety = "Голден";
+        apple.Color = "Зелений";
+
+        // Виведення інформації про яблуко
+        Console.WriteLine("Яблуко:");
+        Console.WriteLine($"Назва: {apple.Name}");
+        Console.WriteLine($"Сорт: {apple.Variety}");
+        Console.WriteLine($"Колір: {apple.Color}");
+    }
+
+       // 2
+
+        public class Fruit
+    {
+        public string Name { get; set; }
+    }
+
+    public class Apple : Fruit
+    {
+        public string Variety { get; set; }
+        public string Color { get; set; }
+    }
+
+    public class Pear : Fruit
+    {
+        public string Variety { get; set; }
+        public string Color { get; set; }
+    }
+
+}
+
+//3 
+/*Напишіть публічний абстрактний клас Animal, що буде описувати тварин.
+
+Він повинен містити такі члени:
+
+1. Публічний автозгенерований параметр( get; set; ) Weight типу float.
+2. Публічний автозгенерований параметр( get; set; ) Color типу string.
+3. Публічний конструктор Animal, що приймає два аргументи : color типу string, weight типу float, та присвоює ці аргументи автозгенерованим параметрам.
+4. Публічний абстрактний метод MakeSound без аргументів, що повертає string. */
+
+public abstract class Animal
+{
+    public float Weight { get; set;}
+    public string Color { get; set; }
+
+    public Animal(string color, float weight) 
+    {
+        Weight = weight;
+        Color = color;
+    }
+    public abstract string MakeSound();
+}
+
+public abstract class AnimalWithTail : Animal
+{
+    public float TailLength { get; set; }
+
+    public AnimalWithTail(string color, float weight, float tailLength) : base(color, weight)
+    {
+        TailLength = tailLength;
+    }
+}
+
+
+/*Напишіть публічний клас Cat, що буде описувати кота та наслідує клас AnimalWithTail. Він повинен містити такі члени:
+
+1. Публічний конструктор Cat, що приймає три аргументи : color типу string, weight типу float, tailLength типу float, 
+та присвоює ці аргументи автозгенерованим параметрам (Ви повинні викликати конструктор базового типу з трьома аргументами).
+2. Приватний метод Purr без аргументів, що повертає string “purrrrrrrr”.
+3. Приватний метод Meow без аргументів, що повертає string “Meow”.
+4. Публічний override метод MakeSound без аргументів, що повертає результат виклику Purr() + Meow().
+5. Публічний override метод ToString без аргументів, що повертає результат виклику 
+$"This is a Cat, Color = {Color}, Weight = {Weight}, TailLength = {TailLength}".  */
+
+public class Cat : AnimalWithTail
+{
+    public Cat(string color, float weight, float tailLength) : base(color, weight, tailLength)
+    {
+    }
+
+    private string Purr()
+    {
+        return "purrrrrrrr";
+    }
+
+    private string Meow()
+    {
+        return "Meow";
+    }
+
+    public override string MakeSound()
+    {
+        return Purr() + Meow();
+    }
+
+    public override string ToString()
+    {
+        return $"This is a Cat, Color = {Color}, Weight = {Weight}, TailLength = {TailLength}";
+    }
+}
+
+
+/*Напишіть публічний клас Dog, що буде описувати собаку та наслідує клас AnimalWithTail. Він повинен містити такі члени:
+
+1. Публічний конструктор Dog, що приймає три аргументи : color типу string, weight типу float, tailLength типу float, 
+та присвоює ці аргументи автозгенерованим параметрам (Ви повинні викликати конструктор базового типу з трьома аргументами).
+2. Публічний override метод MakeSound без аргументів, що повертає “Woof”.
+3. Публічний override метод ToString без аргументів, що повертає результат виклику 
+$"This is a Dog, Color = {Color}, Weight = {Weight}, TailLength = {TailLength}".  */
+
+public class Dog : AnimalWithTail
+{
+    public Dog(string color, float weight, float tailLength) : base(color, weight, tailLength)
+    {
+    }
+    public override string MakeSound()
+    {
+        return "Woof!";
+    }
+    public override string ToString()
+    {
+        return $"This is a Dog, Color = {Color}, Weight = {Weight}, TailLength = {TailLength}";
+    }
+}
+
+
+
+
