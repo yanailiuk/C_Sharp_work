@@ -1,0 +1,136 @@
+/*
+Визначити клас Person. Клас Person повинен складатись з
+              a) двох приватних полів: name та birthYear (рік народження). (В якості типу для цього поля можна використати тип DataTime).
+
+              б) двох властивостей для доступу до цих полів (можна використовувати тільки get)
+
+              в) конструктор за замовчуванням та конструктор з 2 параметрами 
+
+              г) методи: -Age() - для обчислення віку особи;
+
+-Input() - виведення даних про особу з консолі;
+-ChangeName() - змінити ім'я особи;
+
+                 	  - ToString() 
+
+                   	  -Output() - вивести інформацію про особу (виклик ToString())
+
+                 	  - operator ==(рівний за іменем)
+
+У методі Main() створити 6 об'єктів типу Person та ввести інформацію про них. 
+Потім обчислити та вивести на консоль ім'я та вік кожної особи; 
+Ім'я осіб, вік яких менший за 16 років, змінити на "Very Young".
+Вивести на консоль інформацію про всіх осіб. 
+Знайти та вивести на консоль інформацію про осіб з однаковими іменами (використати ==)  */
+
+
+
+class Person
+{
+    private string name;
+    private DateTime birthYear;
+
+    public string Name
+    {
+        get { return name; }
+    }
+
+    public DateTime BirthYear
+    {
+        get { return birthYear; }
+    }
+
+    public Person()
+    {
+        name = "Yana";
+        birthYear = DateTime.MinValue;
+    }
+
+    public Person(string name, DateTime birthYear)
+    {
+        this.name = name;
+        this.birthYear = birthYear;
+    }
+
+    public int Age()
+    {
+        return DateTime.Now.Year - birthYear.Year;
+    }
+
+    public void Input()
+    {
+        Console.Write("Enter name: ");
+        name = Console.ReadLine();
+        Console.Write("Enter birth year: ");
+        birthYear = DateTime.Parse(Console.ReadLine());
+    }
+
+    public void ChangeName(string newName)
+    {
+        name = newName;
+    }
+
+    public override string ToString()
+    {
+        return $"Name: {name}, Birth Year: {birthYear.Year}";
+    }
+
+    public void Output()
+    {
+        Console.WriteLine(ToString());
+    }
+
+    public static bool operator ==(Person person1, Person person2)
+    {
+        return person1.name == person2.name;
+    }
+
+    public static bool operator !=(Person person1, Person person2)
+    {
+        return person1.name != person2.name;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Person[] people = new Person[6];
+
+        for (int i = 0; i < 6; i++)
+        {
+            people[i] = new Person();
+            people[i].Input();
+        }
+
+        foreach (Person person in people)
+        {
+            Console.WriteLine($"Name: {person.Name}, Age: {person.Age()}");
+
+            if (person.Age() < 16)
+            {
+                person.ChangeName("Very Young");
+            }
+        }
+
+        Console.WriteLine("\nInformation about all people:");
+
+        foreach (Person person in people)
+        {
+            person.Output();
+        }
+
+        Console.WriteLine("\nPeople with the same name:");
+
+        for (int i = 0; i < people.Length - 1; i++)
+        {
+            for (int j = i + 1; j < people.Length; j++)
+            {
+                if (people[i] == people[j])
+                {
+                    Console.WriteLine($"{people[i].Name} has the same name as {people[j].Name}");
+                }
+            }
+        }
+    }
+}
