@@ -1,0 +1,99 @@
+using System;
+
+abstract class Shape
+{
+    protected string name;
+
+    public string Name
+    {
+        get { return name; }
+    }
+
+    public Shape(string name)
+    {
+        this.name = name;
+    }
+
+    public abstract double Area();
+    public abstract double Perimeter();
+}
+
+class Circle : Shape
+{
+    private double radius;
+
+    public double Radius
+    {
+        get { return radius; }
+        set { radius = value; }
+    }
+
+    public Circle(string name, double radius) : base(name)
+    {
+        Radius = radius;
+    }
+
+    public override double Area()
+    {
+        return Math.PI * Math.Pow(Radius, 2);
+    }
+
+    public override double Perimeter()
+    {
+        return 2 * Math.PI * Radius;
+    }
+}
+
+class Square : Shape
+{
+    private double side;
+
+    public double Side
+    {
+        get { return side; }
+        set { side = value; }
+    }
+
+    public Square(string name, double side) : base(name)
+    {
+        Side = side;
+    }
+
+    public override double Area()
+    {
+        return Math.Pow(Side, 2);
+    }
+
+    public override double Perimeter()
+    {
+        return 4 * Side;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Circle circle1 = new Circle("Circle 1", 5);
+        Circle circle2 = new Circle("Circle 2", 7);
+
+        Square square1 = new Square("Square 1", 4);
+        Square square2 = new Square("Square 2", 6);
+
+        Shape[] shapes = { circle1, circle2, square1, square2 };
+
+        foreach (var shape in shapes)
+        {
+            Console.WriteLine($"{shape.Name}:");
+            Console.WriteLine($"Area: {shape.Area()}");
+            Console.WriteLine($"Perimeter: {shape.Perimeter()}");
+            Console.WriteLine();
+        }
+
+        double maxSquareArea = shapes.OfType<Square>().Max(s => s.Area());
+        double maxCircleArea = shapes.OfType<Circle>().Max(c => c.Area());
+
+        Console.WriteLine($"Max Square Area: {maxSquareArea}");
+        Console.WriteLine($"Max Circle Area: {maxCircleArea}");
+    }
+}
