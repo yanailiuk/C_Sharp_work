@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+
+// Завдання 1
+class Task
+{
+    public int TaskId { get; set; }
+    public string Description { get; set; }
+}
+
+class TaskManager
+{
+    private List<Task> tasks = new List<Task>();
+
+    public void AddTask(Task newTask)
+    {
+        tasks.Add(newTask);
+        Console.WriteLine("Завдання додано успішно.");
+    }
+
+    public void RemoveTask(int taskId)
+    {
+        Task taskToRemove = tasks.Find(task => task.TaskId == taskId);
+
+        if (taskToRemove != null)
+        {
+            tasks.Remove(taskToRemove);
+            Console.WriteLine("Завдання видалено успішно.");
+        }
+        else
+        {
+            Console.WriteLine("Завдання з вказаним ідентифікатором не знайдено.");
+        }
+    }
+
+    public void DisplayTasks()
+    {
+        Console.WriteLine("Список завдань:");
+
+        foreach (Task task in tasks)
+        {
+            Console.WriteLine($"ID: {task.TaskId}, Опис: {task.Description}");
+        }
+    }
+}
+
+// Завдання 2
+
+class User
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+class UserManager
+{
+    private List<User> users = new List<User>();
+
+    public void AddUser(User newUser)
+    {
+        users.Add(newUser);
+        Console.WriteLine("Користувача додано успішно.");
+    }
+
+    public void RemoveUser(int userId)
+    {
+        User userToRemove = users.Find(user => user.Id == userId);
+
+        if (userToRemove != null)
+        {
+            users.Remove(userToRemove);
+            Console.WriteLine("Користувача видалено успішно.");
+        }
+        else
+        {
+            Console.WriteLine("Користувача з вказаним ідентифікатором не знайдено.");
+        }
+    }
+
+    public User GetUserById(int userId)
+    {
+        return users.Find(user => user.Id == userId);
+    }
+
+    public void DisplayUsers()
+    {
+        Console.WriteLine("Список користувачів:");
+
+        foreach (User user in users)
+        {
+            Console.WriteLine($"ID: {user.Id}, Ім'я: {user.Name}");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Завдання 1
+        TaskManager taskManager = new TaskManager();
+
+        // Додавання кількох завдань
+        taskManager.AddTask(new Task { TaskId = 1, Description = "Виконати домашнє завдання" });
+        taskManager.AddTask(new Task { TaskId = 2, Description = "Підготуватися до зустрічі" });
+
+        // Виведення на екран усіх завдань
+        taskManager.DisplayTasks();
+
+        // Видалення завдання за ідентифікатором
+        taskManager.RemoveTask(1);
+
+        // Виведення на екран оновленого списку завдань
+        taskManager.DisplayTasks();
+
+        // Завдання 2
+        UserManager userManager = new UserManager();
+
+        // Додавання кількох користувачів
+        userManager.AddUser(new User { Id = 1, Name = "Іван" });
+        userManager.AddUser(new User { Id = 2, Name = "Марія" });
+
+        // Виведення на екран усіх користувачів
+        userManager.DisplayUsers();
+
+        // Видалення користувача за ідентифікатором
+        userManager.RemoveUser(1);
+
+        // Виведення на екран оновленого списку користувачів
+        userManager.DisplayUsers();
+
+        // Пошук користувача за ідентифікатором та виведення інформації про нього
+        User foundUser = userManager.GetUserById(2);
+        if (foundUser != null)
+        {
+            Console.WriteLine($"Знайдений користувач: ID: {foundUser.Id}, Ім'я: {foundUser.Name}");
+        }
+        else
+        {
+            Console.WriteLine("Користувача з вказаним ідентифікатором не знайдено.");
+        }
+    }
+}
