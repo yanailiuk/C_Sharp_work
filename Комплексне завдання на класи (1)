@@ -1,0 +1,75 @@
+using System;
+using System.Collections.Generic;
+
+// Інтерфейс для товару
+interface IProduct
+{
+    string Name { get; set; }
+    decimal Price { get; set; }
+    decimal CalculateDiscount();
+}
+
+// Абстрактний клас товару
+abstract class Product : IProduct
+{
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+
+    public abstract decimal CalculateCost();
+
+    public decimal CalculateDiscount()
+    {
+        return 0.1m * Price; // 10% знижка
+    }
+}
+
+// Клас книги як підклас товару
+class Book : Product
+{
+    public int PageCount { get; set; }
+
+    public override decimal CalculateCost()
+    {       
+        return Price + 0.02m * PageCount; 
+    }
+}
+
+// Клас електроніки як підклас товару
+class Electronics : Product
+{
+    public int MemorySize { get; set; }
+
+    public override decimal CalculateCost()
+    {       
+        return Price + 0.1m * MemorySize; 
+    }
+}
+
+// Клас одягу як підклас товару
+class Clothing : Product
+{
+    public string Size { get; set; }
+
+    public override decimal CalculateCost()
+    {
+        return Price + 5; 
+    }
+}
+
+class Program
+{
+    static void Main()
+    {      
+        List<Product> products = new List<Product>();
+     
+        products.Add(new Book { Name = "The Great Gatsby", Price = 20.99m, PageCount = 200 });
+        products.Add(new Electronics { Name = "Smartphone", Price = 499.99m, MemorySize = 128 });
+        products.Add(new Clothing { Name = "T-Shirt", Price = 15.00m, Size = "M" });
+
+       
+        foreach (var product in products)
+        {
+            Console.WriteLine($"Product: {product.Name}, Cost: {product.CalculateCost()}, Discount: {product.CalculateDiscount()}");
+        }
+    }
+}
