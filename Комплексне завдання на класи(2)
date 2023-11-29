@@ -1,0 +1,70 @@
+using System;
+
+// Клас інформації про замовлення
+class Order
+{
+    public int OrderNumber { get; set; }
+    public string[] Products { get; set; }
+    public decimal TotalCost { get; set; }
+
+    // Делегат для зміни статусу замовлення
+    public delegate void OrderStatusChangedHandler(string status);
+
+    // Подія, яка відбувається при зміні статусу замовлення
+    public event OrderStatusChangedHandler OrderStatusChanged;
+
+    // Метод для зміни статусу та виклику події
+    public void ChangeOrderStatus(string newStatus)
+    {
+        Console.WriteLine($"Order {OrderNumber} status changed to {newStatus}");
+        OrderStatusChanged?.Invoke(newStatus);
+    }
+}
+
+// Клас для обробки замовлення
+class OrderProcessor
+{
+    // Метод для обробки замовлення
+    public void ProcessOrder(Order order)
+    {
+        // Логіка обробки замовлення, наприклад, розрахунок вартості, підготовка до відправлення тощо
+        Console.WriteLine($"Processing Order {order.OrderNumber}... Total Cost: {order.TotalCost}");
+
+        // Зміна статусу замовлення
+        order.ChangeOrderStatus("Shipped");
+    }
+}
+
+// Клас для сервісу нотифікацій
+class NotificationService
+{
+    // Метод для відправлення сповіщення про зміну статусу замовлення
+    public void SendNotification(string status)
+    {
+        Console.WriteLine($"Notification: Order status changed to {status}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Створення замовлення
+        Order order = new Order
+        {
+            OrderNumber = 123,
+            Products = new string[] { "Product1", "Product2" },
+            TotalCost = 50.00m
+        };
+
+        // Створення об'єктів OrderProcessor та NotificationService
+        OrderProcessor orderProcessor = new OrderProcessor();
+        NotificationService notificationService = new NotificationService();
+
+        // Підписка на подію зміни статусу замовлення
+        order.OrderStatusChanged += notificationService.SendNotification;
+
+        // Обробка замовлення
+        orderProcessor.ProcessOrder(order);
+    }
+}
