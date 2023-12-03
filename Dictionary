@@ -1,0 +1,82 @@
+using System;
+using System.Collections.Generic;
+
+class Book
+{
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public int Year { get; set; }
+
+    public Book(string title, string author, int year)
+    {
+        Title = title;
+        Author = author;
+        Year = year;
+    }
+
+    public override string ToString()
+    {
+        return $"Book: {Title} by {Author}, Published in {Year}";
+    }
+}
+
+class BookStore
+{
+    private Dictionary<int, Book> bookCatalog = new Dictionary<int, Book>();
+    private int nextBookId = 1;
+
+    public void AddBook(Book book)
+    {
+        bookCatalog.Add(nextBookId, book);
+        Console.WriteLine($"Book '{book.Title}' added to the catalog with ID {nextBookId}.");
+        nextBookId++;
+    }
+
+    public void RemoveBook(int bookId)
+    {
+        if (bookCatalog.ContainsKey(bookId))
+        {
+            Book removedBook = bookCatalog[bookId];
+            bookCatalog.Remove(bookId);
+            Console.WriteLine($"Book '{removedBook.Title}' removed from the catalog.");
+        }
+        else
+        {
+            Console.WriteLine($"Book with ID {bookId} not found in the catalog. Cannot remove.");
+        }
+    }
+
+    public void GetBookInfo(int bookId)
+    {
+        if (bookCatalog.ContainsKey(bookId))
+        {
+            Book book = bookCatalog[bookId];
+            Console.WriteLine(book);
+        }
+        else
+        {
+            Console.WriteLine($"Book with ID {bookId} not found in the catalog. Cannot get info.");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        BookStore bookStore = new BookStore();
+
+        Book book1 = new Book("The Catcher in the Rye", "J.D. Salinger", 1951);
+        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", 1960);
+        Book book3 = new Book("1984", "George Orwell", 1949);
+
+        bookStore.AddBook(book1);
+        bookStore.AddBook(book2);
+        bookStore.AddBook(book3);
+
+        bookStore.GetBookInfo(2);
+
+        bookStore.RemoveBook(1);
+        bookStore.GetBookInfo(1);
+    }
+}
