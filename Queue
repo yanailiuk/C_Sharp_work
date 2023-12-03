@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+
+class Order
+{
+    public string Dish { get; set; }
+    public string CustomerName { get; set; }
+
+    public Order(string dish, string customerName)
+    {
+        Dish = dish;
+        CustomerName = customerName;
+    }
+
+    public override string ToString()
+    {
+        return $"Order: {Dish} for {CustomerName}";
+    }
+}
+
+class OrderQueue
+{
+    private Queue<Order> orderQueue = new Queue<Order>();
+
+    public void AddOrder(Order order)
+    {
+        orderQueue.Enqueue(order);
+        Console.WriteLine($"Order '{order.Dish}' for {order.CustomerName} added to the queue.");
+    }
+
+    public void RemoveOldestOrder()
+    {
+        if (orderQueue.Count > 0)
+        {
+            Order removedOrder = orderQueue.Dequeue();
+            Console.WriteLine($"Oldest order '{removedOrder.Dish}' for {removedOrder.CustomerName} removed from the queue.");
+        }
+        else
+        {
+            Console.WriteLine("Queue is empty. Cannot remove order.");
+        }
+    }
+
+    public Order PeekOldestOrder()
+    {
+        if (orderQueue.Count > 0)
+        {
+            return orderQueue.Peek();
+        }
+        else
+        {
+            Console.WriteLine("Queue is empty. Cannot peek order.");
+            return null;
+        }
+    }
+
+    public void PrintOldestOrderInfo()
+    {
+        Order oldestOrder = PeekOldestOrder();
+        if (oldestOrder != null)
+        {
+            Console.WriteLine(oldestOrder);
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        OrderQueue orderQueue = new OrderQueue();
+
+        Order order1 = new Order("Pizza", "John");
+        Order order2 = new Order("Burger", "Alice");
+        Order order3 = new Order("Pasta", "Bob");
+
+        orderQueue.AddOrder(order1);
+        orderQueue.AddOrder(order2);
+        orderQueue.AddOrder(order3);
+
+        orderQueue.PrintOldestOrderInfo();
+
+        orderQueue.RemoveOldestOrder();
+        orderQueue.PrintOldestOrderInfo();
+    }
+}
