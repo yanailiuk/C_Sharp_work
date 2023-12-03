@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+
+class Document
+{
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public Document(string title, string content)
+    {
+        Title = title;
+        Content = content;
+    }
+
+    public override string ToString()
+    {
+        return $"Document: {Title}\nContent: {Content}";
+    }
+}
+
+class DocumentStack
+{
+    private Stack<Document> documentStack = new Stack<Document>();
+
+    public void AddDocument(Document document)
+    {
+        documentStack.Push(document);
+        Console.WriteLine($"Document '{document.Title}' added to the stack.");
+    }
+
+    public void RemoveTopDocument()
+    {
+        if (documentStack.Count > 0)
+        {
+            Document removedDocument = documentStack.Pop();
+            Console.WriteLine($"Document '{removedDocument.Title}' removed from the stack.");
+        }
+        else
+        {
+            Console.WriteLine("Stack is empty. Cannot remove document.");
+        }
+    }
+
+    public Document PeekTopDocument()
+    {
+        if (documentStack.Count > 0)
+        {
+            return documentStack.Peek();
+        }
+        else
+        {
+            Console.WriteLine("Stack is empty. Cannot peek document.");
+            return null;
+        }
+    }
+
+    public void PrintTopDocumentInfo()
+    {
+        Document topDocument = PeekTopDocument();
+        if (topDocument != null)
+        {
+            Console.WriteLine(topDocument);
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        DocumentStack documentStack = new DocumentStack();
+
+        Document doc1 = new Document("Document 1", "This is the content of Document 1.");
+        Document doc2 = new Document("Document 2", "This is the content of Document 2.");
+        Document doc3 = new Document("Document 3", "This is the content of Document 3.");
+
+        documentStack.AddDocument(doc1);
+        documentStack.AddDocument(doc2);
+        documentStack.AddDocument(doc3);
+
+        documentStack.PrintTopDocumentInfo();
+
+        documentStack.RemoveTopDocument();
+        documentStack.PrintTopDocumentInfo();
+    }
+}
